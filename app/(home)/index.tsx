@@ -1,4 +1,13 @@
-import { View, Text, Pressable, Image, ImageBackground, TouchableOpacity } from "react-native";
+import { 
+    View, 
+    Text, 
+    Pressable, 
+    Image, 
+    ImageBackground, 
+    TouchableOpacity 
+} from "react-native";
+
+import { Link } from "expo-router";
 import { useRef } from "react";
 import { Modalize } from "react-native-modalize";
 
@@ -93,11 +102,13 @@ export default function HomeScreen() {
                         </Text>
 
                         <View style={styles.modalContent_modalControlArea}>
-                            <TouchableOpacity style={styles.modalContent_modalControlArea_confirmBtn}>
-                                <Text style={styles.modalContent_modalControlArea_confirmBtnText}>
-                                    Efetuar pedido de socorro
-                                </Text>
-                            </TouchableOpacity>
+                            <Link href={'./emergencyActivation'} asChild>
+                                <TouchableOpacity style={styles.modalContent_modalControlArea_confirmBtn}>
+                                    <Text style={styles.modalContent_modalControlArea_confirmBtnText}>
+                                        Efetuar pedido de socorro
+                                    </Text>
+                                </TouchableOpacity>
+                            </Link>
 
                             <TouchableOpacity style={styles.modalContent_modalControlArea_cancelBtn} onPress={onClose}>
                                 <Text style={styles.modalContent_modalControlArea_cancelBtnText}>

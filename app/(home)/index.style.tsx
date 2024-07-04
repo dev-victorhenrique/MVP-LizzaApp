@@ -4,7 +4,6 @@ const statusBarHeight = StatusBar.currentHeight
 
 export const styles = StyleSheet.create({
     container: {
-        // backgroundColor: '#000',
         flex: 1,
         backgroundColor: '#C5168C',
     },
@@ -29,8 +28,8 @@ export const styles = StyleSheet.create({
     mainContent: {
         backgroundColor: '#fff',
         flex: 4,
-        paddingRight: 25,
-        paddingLeft: 25,
+        paddingRight: 15,
+        paddingLeft: 15,
         borderTopRightRadius: 10,
         borderTopLeftRadius: 10,
         alignItems: 'center',
