@@ -1,8 +1,29 @@
-import { View, Text, Pressable, Image, ImageBackground } from "react-native";
+import { View, Text, Pressable, Image, ImageBackground, TouchableOpacity } from "react-native";
+import { useRef } from "react";
+import { Modalize } from "react-native-modalize";
+
 
 import { styles } from "./index.style";
 
 export default function HomeScreen() {
+    const homeModalizeRef = useRef<Modalize>(null)
+
+    const onOpen = () => {
+        if (homeModalizeRef.current) {
+            homeModalizeRef.current.open()
+        } else {
+            console.error('modalizeRef está null')
+        }
+    }
+    
+    const onClose = () => {
+        if (homeModalizeRef.current) {
+            homeModalizeRef.current.close()
+        } else {
+            console.error('modalizeRef está null')
+        }
+    }
+    
     return(
         <View style={styles.container} >
             <View style={styles.header} >
@@ -28,7 +49,7 @@ export default function HomeScreen() {
                     Seja Bem-Vindo, Victor.
                 </Text>
 
-                <Pressable>
+                <Pressable onPress={onOpen}>
                     <ImageBackground 
                         style={styles.mainContent_emergencyBtn}
                         source={require('@/assets/vectors/bg-effect-btn.png')} 
@@ -60,6 +81,32 @@ export default function HomeScreen() {
                     </Text>
                 </View>
             </View>
+
+            <Modalize 
+                ref={homeModalizeRef}
+                adjustToContentHeight={true}
+                panGestureEnabled={false}
+                >
+                    <View style={styles.modalContent}>
+                        <Text style={styles.modalContent_warningText}>
+                            Você tem certeza que deseja efetuar um pedido de socorro?    
+                        </Text>
+
+                        <View style={styles.modalContent_modalControlArea}>
+                            <TouchableOpacity style={styles.modalContent_modalControlArea_confirmBtn}>
+                                <Text style={styles.modalContent_modalControlArea_confirmBtnText}>
+                                    Efetuar pedido de socorro
+                                </Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity style={styles.modalContent_modalControlArea_cancelBtn} onPress={onClose}>
+                                <Text style={styles.modalContent_modalControlArea_cancelBtnText}>
+                                    Cancelar
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+            </Modalize>
         </View>
     )
 }

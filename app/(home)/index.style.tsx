@@ -12,11 +12,10 @@ export const styles = StyleSheet.create({
     header: {
         flex: 1,
         paddingTop: statusBarHeight,
-        paddingRight: 25,
-        paddingLeft: 25,
+        paddingRight: 15,
+        paddingLeft: 15,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center',
     },
     
     header_userArea: {
@@ -85,4 +84,46 @@ export const styles = StyleSheet.create({
     footer_contactInformationsArea_supportPhone: {},
 
     footer_contactInformationsArea_websiteURL: {},
+
+    modalContent: {
+        height: 400,
+        width: '100%',
+        paddingLeft: 15,
+        paddingRight: 15,
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 50,
+    },
+
+    modalContent_warningText: {
+        fontSize: 25,
+        textAlign: 'center',
+    },
+
+    modalContent_modalControlArea: {
+        width: '100%',
+        gap: 25,
+    },
+
+    modalContent_modalControlArea_confirmBtn: {
+        width: '100%',
+        borderWidth: 1,
+        padding: 20,
+        borderRadius: 5,
+    },
+
+    modalContent_modalControlArea_confirmBtnText: {
+        color: '#C5168C',
+    },
+    
+    modalContent_modalControlArea_cancelBtn: {
+        backgroundColor: '#C5168C',
+        width: '100%',
+        padding: 20,
+        borderRadius: 5,
+    },
+
+    modalContent_modalControlArea_cancelBtnText: {
+        color: '#fff',
+    }
 })
