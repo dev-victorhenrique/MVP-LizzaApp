@@ -1,6 +1,7 @@
 import { View, Text, Image, ImageBackground, TouchableOpacity } from "react-native";
 import { styles } from "./emergencyActivation.style";
 import { Link } from "expo-router";
+import Timer from "@/components/Timer/Timer";
 
 export default function EmergencyActivationScreen () {
     return(
@@ -14,18 +15,10 @@ export default function EmergencyActivationScreen () {
             <View style={styles.mainContent}>
                 <View style={styles.mainContent_timerArea}>
                     <Text style={styles.mainContent_timerArea_timerLabel}>
-                        Tempo decorrido desde a ativação do pedido de ajuda:
+                        Tempo restante para a ativação do pedido de ajuda:
                     </Text>
 
-                    <ImageBackground
-                        style={styles.mainContent_timerArea_timerOutline}
-                        source={require('@/assets/vectors/timer-outline.png')} 
-                        resizeMode="cover"
-                    >
-                        <Text style={styles.mainContent_timerArea_timer}>
-                            00:15
-                        </Text>
-                    </ImageBackground>
+                    <Timer />
 
                     <Link href={'/'} asChild>
                         <TouchableOpacity style={styles.mainContent_timerArea_confirmBtn}>

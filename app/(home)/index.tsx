@@ -11,7 +11,6 @@ import { Link } from "expo-router";
 import { useRef, useState } from "react";
 import { Modalize } from "react-native-modalize";
 
-
 import { styles } from "./index.style";
 
 export default function HomeScreen() {

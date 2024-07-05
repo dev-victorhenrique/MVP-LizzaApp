@@ -43,7 +43,7 @@ export const styles = StyleSheet.create({
 
     mainContent_timerArea_confirmBtn: {
         backgroundColor: '#0187CB',
-        width: '100%',
+        width: '90%',
         paddingTop: 20,
         paddingBottom: 20,
         alignItems: 'center',
