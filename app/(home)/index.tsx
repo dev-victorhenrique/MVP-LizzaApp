@@ -1,55 +1,86 @@
 import { 
     View, 
-    Text, 
-    Pressable, 
+    Text,
     Image, 
     ImageBackground, 
-    TouchableOpacity 
+    TouchableOpacity,
+    Switch
 } from "react-native";
 
 import { Link } from "expo-router";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Modalize } from "react-native-modalize";
 
 
 import { styles } from "./index.style";
 
 export default function HomeScreen() {
-    const homeModalizeRef = useRef<Modalize>(null)
+    const emergencyModalHomeModalizeRef = useRef<Modalize>(null)
+    const statusAppHomeModalizeRef = useRef<Modalize>(null)
 
-    const onOpen = () => {
-        if (homeModalizeRef.current) {
-            homeModalizeRef.current.open()
+    const [statusAppSwitchValue, setStatusAppSwitchValue] = useState(true)
+
+    const emergencyModalOnOpen = () => {
+        if (emergencyModalHomeModalizeRef.current) {
+            emergencyModalHomeModalizeRef.current.open()
         } else {
             console.error('modalizeRef está null')
         }
     }
     
-    const onClose = () => {
-        if (homeModalizeRef.current) {
-            homeModalizeRef.current.close()
+    const emergencyModalOnClose = () => {
+        if (emergencyModalHomeModalizeRef.current) {
+            emergencyModalHomeModalizeRef.current.close()
         } else {
             console.error('modalizeRef está null')
         }
+    }
+
+    const statusAppModalOnOpen = () => {
+        if (statusAppHomeModalizeRef.current) {
+            statusAppHomeModalizeRef.current.open()
+        } else {
+            console.error('modalizeRef está null')
+        }
+    }
+    
+    const statusAppModalOnClose = () => {
+        if (statusAppHomeModalizeRef.current) {
+            statusAppHomeModalizeRef.current.close()
+        } else {
+            console.error('modalizeRef está null')
+        }
+    }
+
+    const toggleStatusAppSwitchValueConfirmation = () => { statusAppModalOnOpen() }
+    
+    const toggleStatusAppSwitchValue = () => { 
+        setStatusAppSwitchValue(!statusAppSwitchValue) 
+        statusAppModalOnClose()
     }
     
     return(
         <View style={styles.container} >
             <View style={styles.header} >
                 <View style={styles.header_userArea}>
-                    <Pressable>
+                    <TouchableOpacity>
                         <Image 
                             // style={styles.}
                             source={require('@/assets/vectors/perfil-icon.png')} 
                             resizeMode="cover"
                         />
-                    </Pressable>
+                    </TouchableOpacity>
                 </View>
 
                 <View style={styles.header_appStatusArea}>
-                    <Text>
+                    <Text style={styles.header_appStatusArea_label}>
                         Status do app
                     </Text>
+
+                    <Switch
+                        value={statusAppSwitchValue}
+                        onValueChange={toggleStatusAppSwitchValueConfirmation}
+                    />
                 </View>
             </View>
 
@@ -58,7 +89,7 @@ export default function HomeScreen() {
                     Seja Bem-Vindo, Victor.
                 </Text>
 
-                <Pressable onPress={onOpen}>
+                <TouchableOpacity onPress={emergencyModalOnOpen}>
                     <ImageBackground 
                         style={styles.mainContent_emergencyBtn}
                         source={require('@/assets/vectors/bg-effect-btn.png')} 
@@ -68,7 +99,7 @@ export default function HomeScreen() {
                             Pedir socorro
                         </Text>
                     </ImageBackground>
-                </Pressable>
+                </TouchableOpacity>
             </View>
 
             <View style={styles.footer} >
@@ -91,27 +122,66 @@ export default function HomeScreen() {
                 </View>
             </View>
 
+            {/* Emergency request confirmation modal */}
             <Modalize 
-                ref={homeModalizeRef}
+                ref={emergencyModalHomeModalizeRef}
                 adjustToContentHeight={true}
                 panGestureEnabled={false}
                 >
-                    <View style={styles.modalContent}>
-                        <Text style={styles.modalContent_warningText}>
+                    <View style={styles.modalHomeContent}>
+                        <Text style={styles.modalHomeContent_warningText}>
                             Você tem certeza que deseja efetuar um pedido de socorro?    
                         </Text>
 
-                        <View style={styles.modalContent_modalControlArea}>
+                        <View style={styles.modalHomeContent_modalControlArea}>
                             <Link href={'./emergencyActivation'} asChild>
-                                <TouchableOpacity style={styles.modalContent_modalControlArea_confirmBtn}>
-                                    <Text style={styles.modalContent_modalControlArea_confirmBtnText}>
+                                <TouchableOpacity style={styles.modalHomeContent_modalControlArea_confirmBtn}>
+                                    <Text style={styles.modalHomeContent_modalControlArea_confirmBtnText}>
                                         Efetuar pedido de socorro
                                     </Text>
                                 </TouchableOpacity>
                             </Link>
 
-                            <TouchableOpacity style={styles.modalContent_modalControlArea_cancelBtn} onPress={onClose}>
-                                <Text style={styles.modalContent_modalControlArea_cancelBtnText}>
+                            <TouchableOpacity style={styles.modalHomeContent_modalControlArea_cancelBtn} onPress={emergencyModalOnClose}>
+                                <Text style={styles.modalHomeContent_modalControlArea_cancelBtnText}>
+                                    Cancelar
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+            </Modalize>
+
+            {/* Toggle status app confirmation modal */}
+            <Modalize 
+                ref={statusAppHomeModalizeRef}
+                adjustToContentHeight={true}
+                panGestureEnabled={false}
+                >
+                    <View style={styles.modalHomeContent}>
+                        <Text style={styles.modalHomeContent_warningText}>
+                            {  
+                            statusAppSwitchValue ? 
+                                'Você tem certeza que deseja desligar o funcionamento do app?' : 
+                                'Você desejar ligar o funcionamento do app?'
+                            }    
+                        </Text>
+
+                        <View style={styles.modalHomeContent_modalControlArea}>
+                            <TouchableOpacity 
+                                style={styles.modalHomeContent_modalControlArea_confirmBtn}
+                                onPress={toggleStatusAppSwitchValue}
+                            >
+                                <Text style={styles.modalHomeContent_modalControlArea_confirmBtnText}>
+                                    {  
+                                    statusAppSwitchValue ? 
+                                        'Desligar o funcionamento do app' : 
+                                        'Ligar o funcionamento do app'
+                                    }
+                                </Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity style={styles.modalHomeContent_modalControlArea_cancelBtn} onPress={statusAppModalOnClose}>
+                                <Text style={styles.modalHomeContent_modalControlArea_cancelBtnText}>
                                     Cancelar
                                 </Text>
                             </TouchableOpacity>

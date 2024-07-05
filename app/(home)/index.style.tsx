@@ -15,6 +15,7 @@ export const styles = StyleSheet.create({
         paddingLeft: 15,
         flexDirection: 'row',
         justifyContent: 'space-between',
+        alignItems: 'center',
     },
     
     header_userArea: {
@@ -23,6 +24,10 @@ export const styles = StyleSheet.create({
     
     header_appStatusArea: {
         marginTop: 10,
+    },
+
+    header_appStatusArea_label: {
+        color: '#fff',
     },
 
     mainContent: {
@@ -84,7 +89,7 @@ export const styles = StyleSheet.create({
 
     footer_contactInformationsArea_websiteURL: {},
 
-    modalContent: {
+    modalHomeContent: {
         height: 400,
         width: '100%',
         paddingLeft: 15,
@@ -94,35 +99,35 @@ export const styles = StyleSheet.create({
         gap: 50,
     },
 
-    modalContent_warningText: {
+    modalHomeContent_warningText: {
         fontSize: 25,
         textAlign: 'center',
     },
 
-    modalContent_modalControlArea: {
+    modalHomeContent_modalControlArea: {
         width: '100%',
         gap: 25,
     },
 
-    modalContent_modalControlArea_confirmBtn: {
+    modalHomeContent_modalControlArea_confirmBtn: {
         width: '100%',
         borderWidth: 1,
         padding: 20,
         borderRadius: 5,
     },
 
-    modalContent_modalControlArea_confirmBtnText: {
+    modalHomeContent_modalControlArea_confirmBtnText: {
         color: '#C5168C',
     },
     
-    modalContent_modalControlArea_cancelBtn: {
+    modalHomeContent_modalControlArea_cancelBtn: {
         backgroundColor: '#C5168C',
         width: '100%',
         padding: 20,
         borderRadius: 5,
     },
 
-    modalContent_modalControlArea_cancelBtnText: {
+    modalHomeContent_modalControlArea_cancelBtnText: {
         color: '#fff',
     }
 })
