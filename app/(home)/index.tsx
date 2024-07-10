@@ -59,7 +59,7 @@ export default function HomeScreen() {
     }
     
     return(
-        <View style={styles.container} >
+        <View style={styles.container}>
             <View style={styles.header} >
                 <View style={styles.header_userArea}>
                     <TouchableOpacity>
