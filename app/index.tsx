@@ -1,44 +1,40 @@
 import { Text, View } from "react-native";
-import { DeviceMotion, Gyroscope, GyroscopeMeasurement } from "expo-sensors";
+import { DeviceMotion, DeviceMotionMeasurement,  } from "expo-sensors";
 import { useState, useEffect, useRef } from "react";
 import { Modalize } from "react-native-modalize";
+import { Subscription } from "expo-sensors/build/Pedometer";
 
 export default function detectFall () {
+    const modalTest = useRef<Modalize>(null)
+    
     const [data, setData] = useState({
-        accelerationIncludingGravity: { x: 0, y: 0, z: 0 }
+        acceleration: { x: 0, y: 0, z: 0 }
     })
 
-    const [gyroData, setGyroData] = useState({x: 0, y: 0, z: 0})
+    const dataCalculation = () => {
+        let acceleration_x: number = data.acceleration.x
+        let acceleration_y: number = data.acceleration.y
+        let acceleration_z: number = data.acceleration.z
 
-    const modalTest = useRef<Modalize>(null)
-
-    console.log(
-            'aceleração e orientação: ' +
-            ' / ' + data.accelerationIncludingGravity.y.toFixed(2)
-    )
+        return Math.sqrt(Math.pow(acceleration_x, 2) + Math.pow(acceleration_y, 2) + Math.pow(acceleration_z, 2))
+    }
 
     useEffect(() => {
-        DeviceMotion.setUpdateInterval(1000);
-        Gyroscope.setUpdateInterval(1000)
+        DeviceMotion.setUpdateInterval(500);
         
-        const subscription = DeviceMotion.addListener((motionData) => {
-
+        const subscription: Subscription = DeviceMotion.addListener((motionData: DeviceMotionMeasurement) => {
             setData((prevData) => ({
                 ...prevData,
-                accelerationIncludingGravity: motionData.accelerationIncludingGravity ?? prevData.accelerationIncludingGravity
+                acceleration: motionData.acceleration ?? prevData.acceleration
             }));
         });
-
-        const gyroSubscription = Gyroscope.addListener(
-            gyroscopeData => setGyroData(gyroscopeData)
-        )
-
-        if (data.accelerationIncludingGravity.x > 5) {
-            modalTest.current?.open()
-            DeviceMotion.removeAllListeners()
-            return subscription.remove();
-        }
     }, []);
+
+    console.log(`Aceleração resultante: ${dataCalculation().toFixed(2)}`)
+
+    if (dataCalculation() > DeviceMotion.Gravity) {
+        modalTest.current?.open()
+    }
     
     return(
         <View style={{
@@ -52,15 +48,7 @@ export default function detectFall () {
             </Text>
 
             <Text>
-                Valores:
-            </Text>
-
-            <Text>
-                Aceleração incluindo a gravidade - Y: {data.accelerationIncludingGravity.y.toFixed(2)} / X: {data.accelerationIncludingGravity.x.toFixed(2)}
-            </Text>
-
-            <Text>
-                Giroscópio - X: {gyroData.x.toFixed(2)} / Y: {gyroData.y.toFixed(2)} / Z: {gyroData.z.toFixed(2)}
+                Aceleração resultante: {dataCalculation().toFixed(2)} / Queda detectada: {dataCalculation() - DeviceMotion.Gravity > 0 ? 'Sim' : 'Não'}
             </Text>
         
             <Modalize 
