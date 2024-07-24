@@ -6,14 +6,28 @@ import {
     TouchableOpacity,
     Switch
 } from "react-native";
+import MyTask from "@/services/MyTask";
 
 import { Link } from "expo-router";
 import { useRef, useState } from "react";
 import { Modalize } from "react-native-modalize";
 
 import { styles } from "./index.style";
+import call from 'react-native-phone-call';
 
 export default function HomeScreen() {
+
+    const CallButton = () => {
+          const args = {
+            number: '11933089944', // Número para o qual você quer ligar
+            prompt: true,         // Define se vai mostrar o prompt para confirmar a ligação
+          };
+      
+          call(args).catch(console.error);
+        
+    }
+
+
     const emergencyModalHomeModalizeRef = useRef<Modalize>(null)
     const statusAppHomeModalizeRef = useRef<Modalize>(null)
 
@@ -56,6 +70,27 @@ export default function HomeScreen() {
     const toggleStatusAppSwitchValue = () => { 
         setStatusAppSwitchValue(!statusAppSwitchValue) 
         statusAppModalOnClose()
+
+        /*ativar segundo plano
+            após clicar, verifique o console e coloque o app em foreground (apenas saia do aplicativo sem fechá-lo) e observe novamente o console no android
+
+             abaixo o código para ser implementado pelo Victor, assim que o usuario clica em ligar funcionamento do app:
+        */
+        MyTask.register()
+        .then(() => console.log("task registered"))
+        .catch(error => console.log(error))
+
+       /*Desativar segundo plano
+            após clicar, verifique o console, pois deverá aparecer task unregistered, logo o sistema em segundo plano deverá ser desativado, contudo coloque o app em foreground e nao deverá aparecer nada no console
+
+            abaixo o código para ser implementado pelo Victor, assim que o usuario clica em desligar funcionamento do app:
+
+
+            MyTask.unregister()
+            .then(() => console.log("task unregistered"))
+            .catch(error => console.log(error))
+
+        */
     }
     
     return(
@@ -134,7 +169,7 @@ export default function HomeScreen() {
 
                         <View style={styles.modalHomeContent_modalControlArea}>
                             <Link href={'./emergencyActivation'} asChild>
-                                <TouchableOpacity style={styles.modalHomeContent_modalControlArea_confirmBtn}>
+                                <TouchableOpacity style={styles.modalHomeContent_modalControlArea_confirmBtn} onPress={CallButton}>
                                     <Text style={styles.modalHomeContent_modalControlArea_confirmBtnText}>
                                         Efetuar pedido de socorro
                                     </Text>
