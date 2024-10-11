@@ -27,6 +27,7 @@ export default function RootLayout() {
     <GestureHandlerRootView>
       <Stack initialRouteName="(home)">
         <Stack.Screen name="notification" options={{ headerShown: false }} />
+        <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="(home)" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
       </Stack>

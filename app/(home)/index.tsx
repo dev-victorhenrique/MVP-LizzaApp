@@ -13,17 +13,17 @@ import { useRef, useState } from "react";
 import { Modalize } from "react-native-modalize";
 
 import { styles } from "./index.style";
-import call from 'react-native-phone-call';
+import call from 'react-native-phone-call'; 
 
 export default function HomeScreen() {
 
     const CallButton = () => {
           const args = {
-            number: '11933089944', // Número para o qual você quer ligar
+            number: '+55 (11)933089944', // Número para o qual você quer ligar
             prompt: true,         // Define se vai mostrar o prompt para confirmar a ligação
           };
       
-          call(args).catch(console.error);
+          call(args).catch(console.error);  
         
     }
 

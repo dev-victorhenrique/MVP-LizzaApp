@@ -11,7 +11,7 @@ Notifications.setNotificationHandler({
     }),
   });
   
-export default function Notification(){
+export default function Notification(){  
 
     const handleCallNotification = async() =>{
         const {status} = await Notifications.getPermissionsAsync()
