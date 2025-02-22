@@ -20,7 +20,6 @@ export default function Chatbot() {
     useEffect(() => {
         const checkIfFirstTime = async () => {
             const hasSeenChatbot = await AsyncStorage.getItem("hasSeenChatbot");
-            AsyncStorage.clear()
             console.log(hasSeenChatbot)
             if (hasSeenChatbot) {
                 setIsFirstTime(false); 
@@ -68,7 +67,7 @@ export default function Chatbot() {
                 // Quando o chatbot termina, marca como "já visto"
                 AsyncStorage.setItem("hasSeenChatbot", "true");
                // console.log(userAnswers)
-                //register(userAnswers)
+                register(userAnswers)
                 setIsFirstTime(false); // Atualiza para que a tela não seja mais mostrada
             }
         },

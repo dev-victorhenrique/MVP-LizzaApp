@@ -63,6 +63,7 @@ const DetectFall = async() =>{
  if(magnitudeVectorAcelerometer() > GRAVITY_ACELERATION && magnitudeVectorGyroscope() > 1){
     console.log("queda detectada")
     notification.handleCallNotification()
+    console.log(magnitudeVectorAcelerometer())
     
     
 }

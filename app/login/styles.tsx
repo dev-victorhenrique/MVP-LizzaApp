@@ -66,8 +66,8 @@ const styles = StyleSheet.create({
         height:44,
         backgroundColor:"#0095d9",
         padding:10,
-        borderRadius:20
-        
+        borderRadius:20,
+
     },
 
     confirmText:{
@@ -82,7 +82,32 @@ const styles = StyleSheet.create({
         color:'blue',
         fontSize:16,
         fontFamily:"Carnac-Medium",
-    }
+    },
+
+    btns:{
+        display:"flex",
+        flexDirection:"row",
+        alignItems:"center",
+        justifyContent:"center",
+        marginRight:"25%",
+        gap:"25%"
+        
+    },
+
+    confirm2:{
+        width:144,
+        height:44,
+        padding:10,
+        borderRadius:20,
+
+    },
+
+    confirmText2:{
+        color:"#0095d9",
+        textAlign:"center",
+        fontSize:16,
+        fontFamily:"Carnac-Medium",
+    },
 
     
 

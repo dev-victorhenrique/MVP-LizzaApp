@@ -1,19 +1,21 @@
 import { View,TextInput } from "react-native";
 import styles from './styles'
 
-export default function Input(){
+type FieldInputProps = {
+    value: string
+    onChangeText: (text: string) => void  
+  }
 
-    type fieldInput = {
-        placeHolder: string,
-        label: string
-        onChangeText: (text: string) => void  // Adiciona a função onChangeText como prop
-      }
+export default function Input({value, onChangeText }: FieldInputProps){
 
+    
     return (
         <TextInput
             style={styles.inputs}
-            placeholder="Digite algo..."
+            placeholder ="Digite algo..."
             placeholderTextColor="#999"
+            onChangeText={onChangeText}
+            value={value}
         />
     )
 }

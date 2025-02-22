@@ -64,13 +64,7 @@ export  const messages = [
         },
     },
 
-    {
-        message:"Voce tem alguma doenca cronica ?",
-        user:{
-            _id:2,
-            name:"Chatbot"
-        },
-    },
+
 
     {
         message:"Por fim, voce mora sozinho  ?",

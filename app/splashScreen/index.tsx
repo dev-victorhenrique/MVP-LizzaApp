@@ -36,7 +36,7 @@ export default function SplashScreen() {
                 fill={progress}
                 tintColor="#fff"
                 backgroundColor="rgba(255, 255, 255, 0.2)"
-                rotation={0} // Mantém o círculo estático (opcional)
+                rotation={0} 
                 style={{ alignItems: "center", justifyContent: "center", paddingBottom:"10%" }}
             >
                 {() => (

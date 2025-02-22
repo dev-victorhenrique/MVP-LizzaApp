@@ -1,14 +1,13 @@
 import api from './api'
 
-async function loginApi(email,password){
+export async function loginApi(email,password){
 
-    const response = await api.post('/auth/login',{
+    const response = await api.post('/auth',{
         email:email,
         password:password
     })
    
 
-    return response.data.accesToken;
+    return response.data.token;
 }
 
-export default loginApi

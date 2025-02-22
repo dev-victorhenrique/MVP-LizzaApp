@@ -4,28 +4,50 @@ import BottomSheet,{BottomSheetView} from '@gorhom/bottom-sheet';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import React, { useCallback, useMemo, useRef,useEffect,useState } from 'react';
 import { useFonts } from 'expo-font';
-import { CartesianChart, Line,useChartPressState } from "victory-native";
 import { Link } from "expo-router";
 import detectFall from "@/services/utils/detecFallSystem";
+import {jwtDecode} from "jwt-decode";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useRouter } from "expo-router";
+
+
 
  
 export default function Home(){
 
-   detectFall.DetectFall()
+    const [userData, setUserData] = useState<any>(null)
 
-    const DATA = Array.from({ length: 31 }, (_, i) => ({
-        day: i,
-        lowTmp: 20 + 10 * Math.random(),
-        highTmp: 40 + 30 * Math.random(),
-      }));
+         const router = useRouter();
+
+   async function getDataUser(){
+        const token = await AsyncStorage.getItem('token')
+
+        if(!token){
+            router.replace('/login');
+        }
+        const tokenDecoded = jwtDecode(token as string)
+
+        setUserData(tokenDecoded);
+        return tokenDecoded
+       
+    }
+
+    useEffect(() => {
+     getDataUser()
+     detectFall.DetectFall()
+    },[])
+
+  
+
+ 
 
     const [fontsLoaded] = useFonts({
-        'Carnac-Medium': require('../../../assets/fonts/Carnac W03 Medium.ttf'), // Caminho para a fonte
+        'Carnac-Medium': require('../../../assets/fonts/Carnac W03 Medium.ttf'), 
       });
 
     const bottomSheetRef = useRef<BottomSheet>(null);
 
-    // callbacks
+
     const handleSheetChanges = useCallback((index: number) => {
         console.log('handleSheetChanges', index);
     }, []);
@@ -35,24 +57,24 @@ export default function Home(){
 
     return(
         <GestureHandlerRootView style={styles.container}>
-            <View style={styles.header}> //header
+            <View style={styles.header}> 
                 <Image style={styles.logo} source={(require('./../../../assets/images/logo-lizza.png'))}/>
                 <View style={styles.hr}></View>
                 <Text>Lizza.com.br</Text>
             </View>
 
-            <View style={styles.title}> //title
+            <View style={styles.title}> 
                 <View>
                     <Text style={styles.titleText}>Seja bem vindo</Text>
                 </View>
 
                 <View >
-                    <Text style={styles.titleName}>[Nome]</Text>
+                    <Text style={styles.titleName}>{userData ? userData.name : 'Carregando...'}</Text>
                 </View>
             </View>
 
             <Link href={"/timer"}>
-            <View style={styles.emergencyButton}> //emergencyButton    
+            <View style={styles.emergencyButton}> 
                 <TouchableOpacity>
                     <Image style={styles.image} source={require('./../../../assets/images/emergencyButton.png')}/>
                 </TouchableOpacity>    
@@ -60,7 +82,7 @@ export default function Home(){
             </Link>
         
 
-            <View style={styles.status}> //status
+            <View style={styles.status}> 
                 <View style={styles.statusDivision}>
                     <Text style={styles.statusText}>Status do app</Text>
                     <MaterialIcons name="toggle-on" size={60} color="#90ee90" style={styles.icon}/>
@@ -77,7 +99,7 @@ export default function Home(){
                 <BottomSheetView  style={styles.bottomSheetContent}>
                     <Text style={styles.bottomSheetViewTitle}>Seus Hábitos</Text>                 
 
-                    <View style={styles.period}> // Period
+                    <View style={styles.period}> 
                         <TouchableOpacity style={styles.periodType}>
                             <Text style={styles.periodTypeText}>Dia</Text>
                         </TouchableOpacity>
@@ -91,7 +113,7 @@ export default function Home(){
                         </TouchableOpacity>
                     </View>
 
-                    <View style={styles.infoHabitsUser}> //infoHabitsUser
+                    <View style={styles.infoHabitsUser}> 
                         <View style={styles.habitUser}> 
                             <View style={styles.habitUserHour}>
                                 <Text style={styles.habitUserHourText}>XX</Text>
@@ -124,24 +146,7 @@ export default function Home(){
                     </View>
 
                     <View style={styles.chartContainer}>
-                        <CartesianChart
-                            data={DATA} // 👈 specify your data
-                            xKey="day" // 👈 specify data key for x-axis
-                            yKeys={["lowTmp", "highTmp"]} // 👈 specify data keys used for y-axis
-                            axisOptions={{
-                                tickCount:30,
-                                labelOffset:{x:3, y:2},
-                                labelPosition:"inset"
-                            }}
-                            
-                        >
-                            {/* 👇 render function exposes various data, such as points. */}
-                            {({ points }) => (
-                            // 👇 and we'll use the Line component to render a line path.
-                            <Line points={points.highTmp} color="red" strokeWidth={4} />
-                            
-                            )}
-                        </CartesianChart>
+                       
                     </View>
                 </BottomSheetView>
             </BottomSheet>

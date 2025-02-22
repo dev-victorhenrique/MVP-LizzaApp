@@ -1,6 +1,33 @@
-import { SafeAreaView, Text, StyleSheet, View, Image } from "react-native";
+import { SafeAreaView, Text, StyleSheet, View, Image, TouchableOpacity } from "react-native";
+import {jwtDecode} from "jwt-decode";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import React, {useEffect,useState } from 'react';
+import { useRouter } from "expo-router";
 
 export default function Settings() {
+
+    const [userData, setUserData] = useState<any>(null)
+     const router = useRouter();
+
+    async function getDataUser(){
+         const token = await AsyncStorage.getItem('token')
+         const tokenDecoded = jwtDecode(token as string)
+ 
+         setUserData(tokenDecoded);
+         return tokenDecoded
+        
+     }
+
+     function logout(){
+        AsyncStorage.removeItem('token')
+        router.replace('/login')
+     }
+ 
+     useEffect(() => {
+      getDataUser()
+     },[])
+
+
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.header}>
@@ -14,20 +41,92 @@ export default function Settings() {
                         source={require('./../../../assets/images/iconProfile.png')}
                     />
                     <Text>Seu perfil</Text>
+                    <TouchableOpacity onPress={() =>{logout()}}>
+                        <Text style={{marginLeft:200, fontSize:20, color:"red"}}>Sair</Text>
+                    </TouchableOpacity>
+                    
                 </View>
 
-                {["Nome Completo", "Idade", "CEP", "Número e complemento", "Alergias", "Doença Crônica", "Moro sozinho"].map((label, index) => (
-                    <View key={index} style={styles.dataInfo}>
+              
+                    <View  style={styles.dataInfo}>
                         <View style={styles.textContainer}>
-                            <Text style={styles.label}>{label}</Text>
-                            <Text style={styles.value}>xxxxxxx</Text>
+                            <Text style={styles.label}>Nome</Text>
+                            <Text style={styles.value}>{userData ? userData.name : 'Carregando...'}</Text>
                         </View>
                         <Image
                             style={styles.editIcon}
                             source={require('./../../../assets/images/edit.png')}
                         />
                     </View>
-                ))}
+
+                    <View  style={styles.dataInfo}>
+                        <View style={styles.textContainer}>
+                            <Text style={styles.label}>Email</Text>
+                            <Text style={styles.value}>{userData ? userData.email : 'Carregando...'}</Text>
+                        </View>
+                        <Image
+                            style={styles.editIcon}
+                            source={require('./../../../assets/images/edit.png')}
+                        />
+                    </View>
+
+                    <View  style={styles.dataInfo}>
+                        <View style={styles.textContainer}>
+                            <Text style={styles.label}>Idade</Text>
+                            <Text style={styles.value}>{userData ? userData.age : 'Carregando...'}</Text>
+                        </View>
+                        <Image
+                            style={styles.editIcon}
+                            source={require('./../../../assets/images/edit.png')}
+                        />
+                    </View>
+
+                    <View  style={styles.dataInfo}>
+                        <View style={styles.textContainer}>
+                            <Text style={styles.label}>Alergia</Text>
+                            <Text style={styles.value}>{userData ? userData.alergie : 'Carregando...'}</Text>
+                        </View>
+                        <Image
+                            style={styles.editIcon}
+                            source={require('./../../../assets/images/edit.png')}
+                        />
+                    </View>
+
+                    <View  style={styles.dataInfo}>
+                        <View style={styles.textContainer}>
+                            <Text style={styles.label}>Tipo Sanguíneo</Text>
+                            <Text style={styles.value}>{userData ? userData.bloodType : 'Carregando...'}</Text>
+                        </View>
+                        <Image
+                            style={styles.editIcon}
+                            source={require('./../../../assets/images/edit.png')}
+                        />
+                    </View>
+
+                    <View  style={styles.dataInfo}>
+                        <View style={styles.textContainer}>
+                            <Text style={styles.label}>Cep</Text>
+                            <Text style={styles.value}>{userData ? userData.cep : 'Carregando...'}</Text>
+                        </View>
+                        <Image
+                            style={styles.editIcon}
+                            source={require('./../../../assets/images/edit.png')}
+                        />
+                    </View>
+
+                    <View  style={styles.dataInfo}>
+                        <View style={styles.textContainer}>
+                            <Text style={styles.label}>Complemento</Text>
+                            <Text style={styles.value}>{userData ? userData.address : 'Carregando...'}</Text>
+                        </View>
+                        <Image
+                            style={styles.editIcon}
+                            source={require('./../../../assets/images/edit.png')}
+                        />
+                    </View>
+
+                    
+            
             </View>
 
             <View style={styles.footer}>
