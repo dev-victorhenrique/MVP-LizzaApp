@@ -15,7 +15,7 @@ export default function SplashScreen() {
         }, 100);
 
         const timeout = setTimeout(() => {
-            router.replace("/chatbot");
+            router.replace("/login");
         }, 10000);
 
         return () => {

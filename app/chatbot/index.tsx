@@ -5,7 +5,7 @@ import styles from "./styles";
 import { messages as chatbotMessages } from "./messages";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from "expo-router";
-import {register } from "./../../services/register"
+import { register } from "./../../services/register"
 
 export default function Chatbot() {
     const [messages, setMessages] = useState<IMessage[]>([]);
